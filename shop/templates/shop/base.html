@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% load bootstrap4 %}
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{% block title %}Shop Homepage - Bootstrap Template{% endblock %}</title>
+    <link href="{% static "shop/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "shop/css/shop-homepage.css" %}" rel="stylesheet">
+
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="/">Ecommerce Shop</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url "shop:home" %}">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+              <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Account</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% if user.is_authenticated %}
+                            <a class="dropdown-item" href="{% url "shop:signout" %}">Sign Out</a>
+                        {% else %}
+                            <a class="dropdown-item" href="{% url "shop:signin" %}">Sign In</a>
+                            <a class="dropdown-item" href="{% url "shop:signup" %}">Signup</a>
+                        {% endif %}
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url "shop:checkout" %}">Checkout</a>
+                    </div>
+                </li>
+          </ul>
+            <form class="form-inline my-2 my-lg-0 mr-4" action="{% url 'shop:search' %}">
+                <input class="form-control mr-sm-2" name="q" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            <a href="/mycart" class="btn btn-success">{{ request.session.data.count }} Cart{{ request.session.data.count|pluralize }}</a>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3">
+          <br><br><br><br><br><br><br><br><br><br>
+          <div class="list-group">
+              {% for c in categories %}
+                  <a href="{% url "shop:categories" c.slug %}" class="list-group-item">{{ c.name }}</a>
+              {% endfor %}
+              {#<a href="#" class="list-group-item">Category 1</a>#}
+              {#<a href="#" class="list-group-item">Category 2</a>#}
+              {#<a href="#" class="list-group-item">Category 3</a>#}
+          </div>
+
+        </div>
+        <div class="col-lg-9 mt-3">
+        {% bootstrap_messages %}
+{% block header %}{% endblock %}
+
+
+              {% block content %}
+<div class="row mt-3">          
+          </div>
+        {% endblock %}
+        </div>
+      </div>
+    </div>
+    <script src="{% static "shop/js/jquery.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "shop/js/bootstrap.min.js" %}" type="text/javascript"></script>
+
+  </body>
+
+</html>

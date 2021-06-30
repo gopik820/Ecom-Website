@@ -1,0 +1,41 @@
+{% extends "shop/base.html" %}
+{% block title %}Ecommerce Home Page{% endblock  %}
+{% load bootstrap4 %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+          <img class="img-fluid" src="/media/{{ product.image }}" alt="">
+        </div>
+
+        <div class="col-md-4">
+          <h3 class="my-3">{{ product.name|title }}</h3>
+          <p>{{ product.description }}</p>
+          
+            <form action="{% url "shop:cart" product.slug%}">
+                <input type="submit" class="btn btn-danger" value="Add to cart">
+            </form>
+        </div>
+</div>
+        <hr>
+        <div class="row">
+        {% for item in product.review_set.all %}
+            <div class="card mb-3 w-100">
+          <div class="card-body">
+            <h5 class="card-title">{{ item.rate }} star{{ item.rate|pluralize }}</h5>
+            <p class="card-text">{{ item.review}}</p>
+            <p class="card-text">By : {{ item.user.username}}</p>
+          </div>
+          <div class="card-footer text-muted">
+            {{ item.created|timesince }} ago
+          </div>
+        </div>
+        {% endfor %}
+        </div>
+    <div class="row mb-5">
+    <form method="post">
+        {% csrf_token %}
+    {% bootstrap_form form %}
+    <input type="submit" class="btn btn-success">
+    </form>
+    </div>
+{% endblock %}
