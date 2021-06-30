@@ -31,4 +31,4 @@ Create a new superuser by running command :
 
 Go to :
 
-`http://127.0.0.1:8000/admin/shop/` to add/edit categories,products and reviwes.
+`http://127.0.0.1:8000/admin/shop/` inorder to add/edit categories,products and reviews.
