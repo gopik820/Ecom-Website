@@ -129,9 +129,3 @@ def checkout(request):
     request.session.pop('data', None)
     return redirect("/")
 
-@api_view(['GET'])
-def api_products(request):
-    query = request.GET.get("q", "")
-    products = Product.objects.filter(Q(name__contains=query) | Q(description__contains=query))
-    serializer = ProductSerializer(products, many=True)
-    return Response(serializer.data)
